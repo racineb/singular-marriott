@@ -8,25 +8,25 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <style>
 :root {
-  --gold: #C9A84C;
-  --gold-light: #E8D5A0;
-  --black: #0A0A0A;
-  --dark: #161616;
-  --card: #1C1C1C;
-  --border: #2A2A2A;
-  --muted: #666;
-  --white: #FFFFFF;
-  --green: #4CAF50;
-  --blue: #4A9EDB;
-  --yellow: #F0C040;
+  --gold: #B8872A;
+  --gold-light: #8B6414;
+  --black: #FAFAF8;
+  --dark: #F2F0EB;
+  --card: #FFFFFF;
+  --border: #E2DDD4;
+  --muted: #999;
+  --white: #1A1A1A;
+  --green: #2E7D32;
+  --blue: #1565C0;
+  --yellow: #B45309;
   --radius: 14px;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif; background: var(--black); color: var(--white); min-height: 100vh; }
 
 /* TOP BAR */
-.top-bar { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px 12px; background: var(--black); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #1E1E1E; }
-.top-bar img { height: 16px; filter: invert(1); opacity: 0.85; }
+.top-bar { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px 12px; background: var(--black); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); }
+.top-bar img { height: 16px; opacity: 0.9; }
 .back-btn { font-size: 13px; color: var(--gold); cursor: pointer; min-width: 64px; }
 .back-btn.hidden { visibility: hidden; }
 .page-title { font-size: 13px; font-weight: 600; color: var(--white); min-width: 64px; text-align: right; }
@@ -37,7 +37,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-se
 
 /* ─── LOGIN ─── */
 #view-login { text-align: center; padding: 52px 28px 40px; }
-#view-login img.hero-logo { height: 30px; filter: invert(1); opacity: 0.9; margin-bottom: 10px; }
+#view-login img.hero-logo { height: 30px; opacity: 0.9; margin-bottom: 10px; }
 .login-sub { font-size: 13px; color: var(--muted); margin-bottom: 40px; }
 .login-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .user-card { background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 22px 12px 18px; cursor: pointer; transition: border-color .18s, transform .1s; }
@@ -53,7 +53,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-se
 
 /* ─── HOME ─── */
 #view-home { text-align: center; padding: 52px 28px 40px; }
-#view-home img.hero-logo { height: 30px; filter: invert(1); opacity: 0.9; margin-bottom: 36px; }
+#view-home img.hero-logo { height: 30px; opacity: 0.9; margin-bottom: 36px; }
 .home-title { font-size: 24px; font-weight: 700; line-height: 1.25; margin-bottom: 6px; }
 .home-sub { font-size: 14px; color: var(--muted); margin-bottom: 44px; }
 .gold-divider { width: 36px; height: 2px; background: var(--gold); margin: 0 auto 36px; }
@@ -66,7 +66,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-se
 .dash-header h2 { font-size: 18px; font-weight: 700; }
 .btn-new { background: var(--gold); color: var(--black); border: none; border-radius: 10px; padding: 10px 18px; font-size: 13px; font-weight: 800; cursor: pointer; }
 .btn-new:active { opacity: .82; }
-.tab-row { display: flex; background: #111; border-radius: 10px; padding: 3px; gap: 2px; margin: 0 16px 14px; }
+.tab-row { display: flex; background: var(--border); border-radius: 10px; padding: 3px; gap: 2px; margin: 0 16px 14px; }
 .tab { flex: 1; text-align: center; padding: 9px 6px; font-size: 12px; font-weight: 600; color: var(--muted); border-radius: 8px; cursor: pointer; transition: all .15s; }
 .tab.active { background: var(--dark); color: var(--white); }
 .pill-row { display: flex; gap: 8px; margin-bottom: 14px; overflow-x: auto; padding: 0 16px 2px; }
@@ -81,9 +81,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-se
 .oc-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
 .oid { font-size: 11px; color: var(--gold); letter-spacing: 1px; font-weight: 700; }
 .badge { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 20px; }
-.b0 { background: rgba(240,192,64,.12); color: var(--yellow); border: 1px solid rgba(240,192,64,.3); }
-.b1 { background: rgba(74,158,219,.12); color: var(--blue); border: 1px solid rgba(74,158,219,.3); }
-.b2 { background: rgba(76,175,80,.12); color: var(--green); border: 1px solid rgba(76,175,80,.3); }
+.b0 { background: #FEF3C7; color: #92400E; border: 1px solid #FCD34D; }
+.b1 { background: #DBEAFE; color: #1E40AF; border: 1px solid #93C5FD; }
+.b2 { background: #D1FAE5; color: #065F46; border: 1px solid #6EE7B7; }
 .oname { font-size: 16px; font-weight: 600; }
 .ometa { font-size: 12px; color: var(--muted); margin-top: 3px; }
 .oinit { font-size: 12px; color: var(--gold-light); font-weight: 600; margin-top: 5px; }
@@ -91,18 +91,18 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-se
 /* Production cards */
 .prod-wrap { padding: 0 16px 100px; }
 .prod-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 12px; overflow: hidden; }
-.pc-head { padding: 12px 16px 10px; display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid #1E1E1E; }
+.pc-head { padding: 12px 16px 10px; display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--border); }
 .pc-name { font-size: 15px; font-weight: 700; }
 .pc-meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
 .status-steps { display: flex; padding: 10px 12px; gap: 6px; }
 .step-btn { flex: 1; border-radius: 8px; padding: 10px 4px; font-size: 11px; font-weight: 700; cursor: pointer; border: 1.5px solid; text-align: center; transition: all .15s; }
 .step-btn:active { opacity: .8; }
-.sb0 { border-color: rgba(240,192,64,.25); color: #555; background: transparent; }
-.sb1 { border-color: rgba(74,158,219,.25); color: #555; background: transparent; }
-.sb2 { border-color: rgba(76,175,80,.25); color: #555; background: transparent; }
-.sb0.on { background: rgba(240,192,64,.14); color: var(--yellow); border-color: rgba(240,192,64,.55); }
-.sb1.on { background: rgba(74,158,219,.14); color: var(--blue); border-color: rgba(74,158,219,.55); }
-.sb2.on { background: rgba(76,175,80,.14); color: var(--green); border-color: rgba(76,175,80,.55); }
+.sb0 { border-color: #E5E0D8; color: #AAA; background: transparent; }
+.sb1 { border-color: #E5E0D8; color: #AAA; background: transparent; }
+.sb2 { border-color: #E5E0D8; color: #AAA; background: transparent; }
+.sb0.on { background: #FEF3C7; color: #92400E; border-color: #FCD34D; }
+.sb1.on { background: #DBEAFE; color: #1E40AF; border-color: #93C5FD; }
+.sb2.on { background: #D1FAE5; color: #065F46; border-color: #6EE7B7; }
 
 /* Inventory */
 .inv-wrap { padding: 0 16px 100px; }
@@ -110,10 +110,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-se
 .inv-prod-name { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
 .inv-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
 .inv-label { font-size: 12px; color: var(--muted); min-width: 110px; }
-.inv-bar-wrap { flex: 1; height: 4px; background: #222; border-radius: 2px; }
+.inv-bar-wrap { flex: 1; height: 4px; background: #E0DAD0; border-radius: 2px; }
 .inv-bar { height: 4px; border-radius: 2px; background: var(--gold); transition: width .3s; }
 .inv-bar.low { background: var(--yellow); }
-.inv-bar.empty { background: #2a2a2a; }
+.inv-bar.empty { background: #E0DAD0; }
 .inv-count { font-size: 11px; font-weight: 700; min-width: 36px; text-align: right; }
 .inv-count.empty { color: #444; }
 
@@ -121,37 +121,37 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-se
 .form-wrap { padding: 20px 16px 100px; }
 .form-block { margin-bottom: 24px; }
 .form-lbl { font-size: 11px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 10px; display: block; }
-.text-inp { width: 100%; background: #141414; border: 1.5px solid var(--border); border-radius: 10px; padding: 14px 16px; font-size: 16px; color: var(--white); outline: none; }
+.text-inp { width: 100%; background: #FFFFFF; border: 1.5px solid var(--border); border-radius: 10px; padding: 14px 16px; font-size: 16px; color: var(--white); outline: none; }
 .text-inp:focus { border-color: var(--gold); }
-.text-inp::placeholder { color: #333; }
+.text-inp::placeholder { color: #BBB; }
 .mono-inp { text-align: center; letter-spacing: 4px; text-transform: uppercase; font-size: 20px; font-weight: 700; }
-.mono-inp::placeholder { font-size: 14px; letter-spacing: 2px; font-weight: 400; color: #2e2e2e; text-transform: none; }
+.mono-inp::placeholder { font-size: 14px; letter-spacing: 2px; font-weight: 400; color: #BBB; text-transform: none; }
 .char-hint { text-align: right; font-size: 11px; color: var(--muted); margin-top: 4px; }
 .chip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.chip { background: var(--dark); border: 1.5px solid var(--border); border-radius: 10px; padding: 14px 12px; text-align: center; cursor: pointer; transition: all .15s; }
+.chip { background: #FFFFFF; border: 1.5px solid var(--border); border-radius: 10px; padding: 14px 12px; text-align: center; cursor: pointer; transition: all .15s; }
 .chip:active { opacity: .8; }
-.chip.sel { border-color: var(--gold); background: rgba(201,168,76,.07); }
+.chip.sel { border-color: var(--gold); background: rgba(184,135,42,.07); }
 .chip-icon { font-size: 22px; margin-bottom: 6px; }
 .chip-name { font-size: 13px; font-weight: 700; }
 .variant-list { display: flex; flex-direction: column; gap: 8px; }
-.vbtn { display: flex; justify-content: space-between; align-items: center; background: var(--dark); border: 1.5px solid var(--border); border-radius: 10px; padding: 13px 16px; cursor: pointer; transition: all .15s; }
+.vbtn { display: flex; justify-content: space-between; align-items: center; background: #FFFFFF; border: 1.5px solid var(--border); border-radius: 10px; padding: 13px 16px; cursor: pointer; transition: all .15s; }
 .vbtn:active { opacity: .8; }
-.vbtn.sel { border-color: var(--gold); background: rgba(201,168,76,.07); }
+.vbtn.sel { border-color: var(--gold); background: rgba(184,135,42,.07); }
 .vbtn.out { opacity: .3; pointer-events: none; }
 .vname { font-size: 14px; font-weight: 600; }
 .vstock { font-size: 11px; font-weight: 700; }
 .vs-good { color: var(--green); }
 .vs-low  { color: var(--yellow); }
 .vs-none { color: #444; }
-.emoji-tab-row { display: flex; background: #111; border-radius: 9px; padding: 3px; gap: 2px; margin-bottom: 10px; }
+.emoji-tab-row { display: flex; background: var(--border); border-radius: 9px; padding: 3px; gap: 2px; margin-bottom: 10px; }
 .e-tab { flex: 1; text-align: center; padding: 7px 4px; font-size: 11px; color: var(--muted); border-radius: 7px; cursor: pointer; font-weight: 600; }
 .e-tab.active { background: var(--dark); color: var(--white); }
 .emoji-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 6px; max-height: 156px; overflow-y: auto; }
 .emoji-grid::-webkit-scrollbar { display: none; }
-.e-item { background: #141414; border: 1.5px solid transparent; border-radius: 8px; padding: 8px 2px; text-align: center; font-size: 18px; cursor: pointer; }
-.e-item.sel { border-color: var(--gold); background: rgba(201,168,76,.08); }
+.e-item { background: #F5F3EF; border: 1.5px solid transparent; border-radius: 8px; padding: 8px 2px; text-align: center; font-size: 18px; cursor: pointer; }
+.e-item.sel { border-color: var(--gold); background: rgba(184,135,42,.12); }
 .e-item:active { transform: scale(.9); }
-.no-emoji { display: inline-flex; align-items: center; gap: 5px; background: #141414; border: 1.5px solid transparent; border-radius: 8px; padding: 6px 12px; font-size: 12px; color: var(--muted); cursor: pointer; margin-bottom: 10px; }
+.no-emoji { display: inline-flex; align-items: center; gap: 5px; background: #F5F3EF; border: 1.5px solid transparent; border-radius: 8px; padding: 6px 12px; font-size: 12px; color: var(--muted); cursor: pointer; margin-bottom: 10px; }
 .no-emoji.sel { border-color: var(--gold); color: var(--gold); }
 .color-row { display: flex; gap: 10px; flex-wrap: wrap; }
 .c-dot { width: 34px; height: 34px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: all .15s; }
@@ -163,33 +163,33 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-se
 .c-gray  { background: #888; }
 .c-white { background: #FFF; border-color: #333 !important; }
 .size-row { display: flex; gap: 8px; }
-.size-btn { flex: 1; background: var(--dark); border: 1.5px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; }
-.size-btn.sel { border-color: var(--gold); background: rgba(201,168,76,.07); }
+.size-btn { flex: 1; background: #FFFFFF; border: 1.5px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; }
+.size-btn.sel { border-color: var(--gold); background: rgba(184,135,42,.07); }
 .size-lbl { font-size: 14px; font-weight: 700; }
 .size-sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
-.note-box { background: #120F00; border: 1px solid #3A2800; border-radius: 9px; padding: 10px 14px; font-size: 12px; color: var(--gold); margin-top: 8px; line-height: 1.45; }
+.note-box { background: #FDF8EE; border: 1px solid #E8D5A0; border-radius: 9px; padding: 10px 14px; font-size: 12px; color: #8B6414; margin-top: 8px; line-height: 1.45; }
 .btn-save { display: block; width: 100%; background: var(--gold); color: var(--black); border: none; border-radius: 13px; padding: 18px; font-size: 16px; font-weight: 800; cursor: pointer; margin-top: 8px; }
 .btn-save:active { opacity: .82; }
 
 /* ─── DETAIL ─── */
 .detail-wrap { padding: 16px 16px 80px; }
 .detail-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 14px; }
-.dhead { background: #111; padding: 16px 18px; border-bottom: 1px solid #1E1E1E; display: flex; justify-content: space-between; align-items: center; }
+.dhead { background: var(--dark); padding: 16px 18px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
 .dguest { font-size: 18px; font-weight: 700; }
 .did { font-size: 11px; color: var(--gold); letter-spacing: 1.5px; margin-top: 2px; }
 .dbody { padding: 18px; }
-.spec-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #1E1E1E; }
+.spec-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); }
 .spec-row:last-child { border-bottom: none; }
 .sk { font-size: 12px; color: var(--muted); }
 .sv { font-size: 12px; font-weight: 600; text-align: right; }
 .section-lbl { font-size: 10px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin: 16px 0 10px; }
 .status-ctrl { display: flex; gap: 7px; }
 .s-btn { flex: 1; border-radius: 9px; padding: 11px 4px; font-size: 11px; font-weight: 700; cursor: pointer; border: 1.5px solid; text-align: center; transition: opacity .15s; }
-.sb-0 { background: rgba(240,192,64,.08); color: var(--yellow); border-color: rgba(240,192,64,.4); }
-.sb-1 { background: rgba(74,158,219,.08); color: var(--blue); border-color: rgba(74,158,219,.4); }
-.sb-2 { background: rgba(76,175,80,.08); color: var(--green); border-color: rgba(76,175,80,.4); }
+.sb-0 { background: #FEF3C7; color: #92400E; border-color: #FCD34D; }
+.sb-1 { background: #DBEAFE; color: #1E40AF; border-color: #93C5FD; }
+.sb-2 { background: #D1FAE5; color: #065F46; border-color: #6EE7B7; }
 .s-btn.dim { opacity: .3; }
-.link-box { background: #0E0E0E; border: 1px solid #222; border-radius: 9px; padding: 12px 14px; display: flex; align-items: center; gap: 10px; margin-top:0; }
+.link-box { background: var(--dark); border: 1px solid var(--border); border-radius: 9px; padding: 12px 14px; display: flex; align-items: center; gap: 10px; margin-top:0; }
 .link-text { font-size: 11px; color: var(--muted); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: monospace; }
 .copy-btn { font-size: 11px; font-weight: 700; color: var(--gold); background: none; border: none; cursor: pointer; padding: 0; }
 .btn-edit { width: 100%; background: transparent; color: var(--gold); border: 1.5px solid rgba(201,168,76,.4); border-radius: 12px; padding: 14px; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 14px; }
@@ -200,7 +200,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-se
 /* ─── TRACKING ─── */
 .track-wrap { padding: 24px 16px 60px; }
 .track-row { display: flex; gap: 8px; margin-bottom: 24px; }
-.track-inp { flex: 1; background: #141414; border: 1.5px solid var(--border); border-radius: 10px; padding: 13px 16px; font-size: 15px; color: var(--white); outline: none; text-transform: uppercase; letter-spacing: 2px; }
+.track-inp { flex: 1; background: #FFFFFF; border: 1.5px solid var(--border); border-radius: 10px; padding: 13px 16px; font-size: 15px; color: var(--white); outline: none; text-transform: uppercase; letter-spacing: 2px; }
 .track-inp:focus { border-color: var(--gold); }
 .btn-search { background: var(--gold); color: var(--black); border: none; border-radius: 10px; padding: 13px 18px; font-size: 13px; font-weight: 800; cursor: pointer; }
 .timeline { padding: 4px 0; }
@@ -209,10 +209,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-se
 .t-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
 .t-dot.done { background: var(--gold); color: var(--black); font-weight: 700; }
 .t-dot.cur  { background: #1A1500; border: 2px solid var(--gold); color: var(--gold); animation: glow 1.6s infinite; }
-.t-dot.pend { background: #141414; border: 2px solid #2A2A2A; color: #333; }
+.t-dot.pend { background: #F0EDE8; border: 2px solid var(--border); color: #CCC; }
 .t-line { width: 2px; flex: 1; min-height: 28px; margin: 4px 0; }
 .t-line.done { background: var(--gold); }
-.t-line.pend { background: #222; }
+.t-line.pend { background: var(--border); }
 .t-content { flex: 1; padding-bottom: 24px; }
 .t-title { font-size: 15px; font-weight: 600; }
 .t-title.pend { color: #444; }
@@ -223,6 +223,41 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-se
 .empty { text-align: center; padding: 48px 20px; }
 .empty-icon { font-size: 36px; margin-bottom: 12px; opacity: .4; }
 .empty-text { font-size: 14px; color: var(--muted); }
+
+/* ─── CORTESÍA TOGGLE ─── */
+.toggle-row { display: flex; align-items: center; justify-content: space-between; background: #FFFFFF; border: 1.5px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+.toggle-info .toggle-lbl { font-size: 14px; font-weight: 600; }
+.toggle-info .toggle-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.toggle-sw { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+.toggle-sw input { opacity: 0; width: 0; height: 0; }
+.toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: #E0DAD0; border-radius: 24px; transition: .3s; }
+.toggle-slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background: white; border-radius: 50%; transition: .3s; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+input:checked + .toggle-slider { background: #2E7D32; }
+input:checked + .toggle-slider:before { transform: translateX(20px); }
+
+/* Price / courtesy badges on cards */
+.price-tag { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 20px; }
+.price-paid { background: #EEF4FF; color: #1565C0; border: 1px solid #BFDBFE; }
+.price-free { background: #F0FDF4; color: #166534; border: 1px solid #86EFAC; }
+
+/* ─── BILLING TAB ─── */
+.billing-wrap { padding: 0 16px 100px; }
+.billing-summary { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+.billing-title { font-size: 11px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 14px; }
+.billing-stat { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.billing-stat:last-child { border-bottom: none; }
+.billing-stat-lbl { font-size: 13px; color: var(--muted); }
+.billing-stat-val { font-size: 15px; font-weight: 700; }
+.billing-total { background: var(--gold); color: var(--black); border-radius: 12px; padding: 18px 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.billing-total-lbl { font-size: 13px; font-weight: 700; }
+.billing-total-amt { font-size: 22px; font-weight: 800; }
+.billing-item-list { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.billing-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.billing-item:last-child { border-bottom: none; }
+.billing-item-name { font-size: 13px; font-weight: 600; }
+.billing-item-meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.billing-item-price { font-size: 13px; font-weight: 700; color: var(--blue); }
+.billing-item-price.free { color: #166534; }
 </style>
 </head>
 <body>
@@ -272,6 +307,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-se
     <div class="tab active" id="tab-orders" onclick="switchTab('orders')">Órdenes</div>
     <div class="tab" id="tab-prod" onclick="switchTab('prod')">Producción</div>
     <div class="tab" id="tab-inv" onclick="switchTab('inv')">Inventario</div>
+    <div class="tab" id="tab-billing" onclick="switchTab('billing')">Facturación</div>
   </div>
 
   <!-- Orders -->
@@ -299,6 +335,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-se
   <!-- Inventory -->
   <div id="panel-inv" style="display:none">
     <div class="inv-wrap" id="inv-content" style="padding-top:4px"></div>
+  </div>
+
+  <!-- Billing -->
+  <div id="panel-billing" style="display:none">
+    <div class="billing-wrap" id="billing-content" style="padding-top:8px"></div>
   </div>
 </div>
 
@@ -371,6 +412,21 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-se
       <textarea class="text-inp" id="inp-notes" rows="2" placeholder="Detalles extra..." style="resize:none;line-height:1.5;font-size:14px"></textarea>
     </div>
 
+    <div class="form-block">
+      <label class="form-lbl">Tipo de Orden</label>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <div class="toggle-lbl" id="courtesy-lbl">Orden de Pago</div>
+          <div class="toggle-sub" id="courtesy-sub">Se factura al cliente</div>
+        </div>
+        <label class="toggle-sw">
+          <input type="checkbox" id="inp-courtesy" onchange="onCourtesyChange()">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="note-box" id="courtesy-price-note" style="margin-top:8px">💳 Precio: <strong id="courtesy-price-val">$0</strong></div>
+    </div>
+
     <button class="btn-save" onclick="saveOrder()">GUARDAR ORDEN</button>
   </div>
 </div>
@@ -422,6 +478,7 @@ const BASE_INV = {
 };
 const PROD_LABELS  = { cover:'Phone Cover', bagtag:'Bag Tag', keytag:'Key Tag', tobacco:'Tobacco Case' };
 const VAR_LABELS   = { cover:'Modelo', bagtag:'Color', keytag:'Color', tobacco:'Color' };
+const PRICES       = { cover:2900, bagtag:1800, keytag:1400, tobacco:2400 };
 const STATUS_TXT   = ['RECIBIDA','EN PROCESO','LISTA ✓'];
 const USERS = {
   alexia: { name:'Alexia', role:'staff',      avatar:'A', cls:'av-alexia' },
@@ -448,18 +505,37 @@ let editId    = null;
 let F = {};
 
 function saveData(order) {
-  ordersRef.child(order.id).set(order);
+  // Always save locally first
+  const idx = orders.findIndex(o => o.id === order.id);
+  if (idx >= 0) orders[idx] = order; else orders.push(order);
+  localStorage.setItem('sg_orders', JSON.stringify(orders));
+  renderOrders(); renderProd();
+  // Then try Firebase
+  ordersRef.child(order.id).set(order)
+    .then(() => console.log('✅ Firebase sync:', order.id))
+    .catch(err => console.warn('⚠️ Firebase falló, guardado localmente:', err.message));
 }
 
 // Real-time listener — updates all devices instantly
+let firebaseOK = false;
 ordersRef.on('value', snapshot => {
+  firebaseOK = true;
   const data = snapshot.val() || {};
   orders = Object.values(data).sort((a,b) => (a.createdAt||0) - (b.createdAt||0));
+  // Keep localStorage in sync as backup
+  localStorage.setItem('sg_orders', JSON.stringify(orders));
   if (curUser) {
     renderOrders();
     renderProd();
     if (curTab === 'inv') renderInv();
+    if (curTab === 'billing') renderBilling();
   }
+}, err => {
+  // Firebase failed — fall back to localStorage
+  console.warn('Firebase no disponible, usando localStorage:', err.message);
+  firebaseOK = false;
+  orders = JSON.parse(localStorage.getItem('sg_orders') || '[]');
+  if (curUser) { renderOrders(); renderProd(); }
 });
 function usedInv() {
   const u = {};
@@ -491,11 +567,13 @@ function afterLogin() {
     document.getElementById('btn-new-order').style.display = 'none';
     document.getElementById('tab-orders').style.display = 'none';
     document.getElementById('tab-inv').style.display = 'none';
+    document.getElementById('tab-billing').style.display = 'none';
     switchTab('prod');
   } else {
     document.getElementById('btn-new-order').style.display = '';
     document.getElementById('tab-orders').style.display = '';
     document.getElementById('tab-inv').style.display = '';
+    document.getElementById('tab-billing').style.display = '';
     switchTab('orders');
   }
   nav('dashboard');
@@ -526,14 +604,16 @@ function goBack() {
 // ── TABS ──
 function switchTab(t) {
   curTab = t;
-  ['orders','prod','inv'].forEach(x => {
+  ['orders','prod','inv','billing'].forEach(x => {
     const el = document.getElementById('tab-'+x);
     if (el) el.className = 'tab' + (x===t?' active':'');
-    document.getElementById('panel-'+x).style.display = x===t?'block':'none';
+    const panel = document.getElementById('panel-'+x);
+    if (panel) panel.style.display = x===t?'block':'none';
   });
   if (t==='prod') renderProd();
   if (t==='inv')  renderInv();
   if (t==='orders') renderOrders();
+  if (t==='billing') renderBilling();
 }
 
 // ── FILTERS ──
@@ -557,16 +637,23 @@ function renderOrders() {
     list.innerHTML = `<div class="empty"><div class="empty-icon">🎁</div><div class="empty-text">${orders.length?'Sin órdenes en esta categoría.':'Aún no hay órdenes.'}</div></div>`;
     return;
   }
-  list.innerHTML = data.map(o => `
+  list.innerHTML = data.map(o => {
+    const isCourtesy = o.courtesy || false;
+    const price = isCourtesy ? 0 : (o.price || PRICES[o.product] || 0);
+    const priceBadge = isCourtesy
+      ? `<span class="price-tag price-free">🎁 Cortesía</span>`
+      : `<span class="price-tag price-paid">$${price.toLocaleString('es-MX')}</span>`;
+    return `
     <div class="order-card" onclick="showDetail('${o.id}')">
       <div class="oc-top">
         <span class="oid">${o.id}</span>
         <span class="badge b${o.status}">${STATUS_TXT[o.status]}</span>
       </div>
-      <div class="oname">${o.guest}</div>
+      <div class="oname" style="display:flex;align-items:center;gap:8px">${o.guest} ${priceBadge}</div>
       <div class="ometa">${PROD_LABELS[o.product]} · ${o.variant}</div>
       <div class="oinit">${o.initials}${o.emoji?' · '+o.emoji:''} · ${o.printColor} · ${o.fontSize}</div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 // ── RENDER PRODUCTION ──
@@ -622,6 +709,79 @@ function renderInv() {
   el.innerHTML = html;
 }
 
+// ── RENDER BILLING ──
+function renderBilling() {
+  const el = document.getElementById('billing-content');
+  const paid = orders.filter(o => !o.courtesy);
+  const courtesy = orders.filter(o => o.courtesy);
+  const total = paid.reduce((sum, o) => sum + (o.price || PRICES[o.product] || 0), 0);
+  const fmt = n => '$' + n.toLocaleString('es-MX');
+
+  // Breakdown by product (paid only)
+  const byProduct = {};
+  paid.forEach(o => {
+    if (!byProduct[o.product]) byProduct[o.product] = { count:0, total:0 };
+    const p = o.price || PRICES[o.product] || 0;
+    byProduct[o.product].count++;
+    byProduct[o.product].total += p;
+  });
+
+  let html = `
+    <div class="billing-total">
+      <div class="billing-total-lbl">TOTAL A FACTURAR</div>
+      <div class="billing-total-amt">${fmt(total)}</div>
+    </div>
+    <div class="billing-summary">
+      <div class="billing-title">RESUMEN</div>
+      <div class="billing-stat"><span class="billing-stat-lbl">Total órdenes</span><span class="billing-stat-val">${orders.length}</span></div>
+      <div class="billing-stat"><span class="billing-stat-lbl">Órdenes de pago</span><span class="billing-stat-val" style="color:#1565C0">${paid.length}</span></div>
+      <div class="billing-stat"><span class="billing-stat-lbl">Cortesías</span><span class="billing-stat-val" style="color:#166534">${courtesy.length}</span></div>
+    </div>`;
+
+  if (Object.keys(byProduct).length) {
+    html += `<div class="form-lbl" style="padding:0 0 10px">POR PRODUCTO</div>
+    <div class="billing-summary">`;
+    for (const [prod, data] of Object.entries(byProduct)) {
+      html += `<div class="billing-stat">
+        <div><div class="billing-stat-lbl">${PROD_LABELS[prod]}</div><div style="font-size:10px;color:var(--muted)">${data.count} piezas · ${fmt(PRICES[prod])} c/u</div></div>
+        <span class="billing-stat-val">${fmt(data.total)}</span>
+      </div>`;
+    }
+    html += `</div>`;
+  }
+
+  if (paid.length) {
+    html += `<div class="form-lbl" style="padding:8px 0 10px">DETALLE DE PAGO</div>
+    <div class="billing-item-list">`;
+    paid.forEach(o => {
+      const price = o.price || PRICES[o.product] || 0;
+      html += `<div class="billing-item">
+        <div><div class="billing-item-name">${o.guest}</div><div class="billing-item-meta">${o.id} · ${PROD_LABELS[o.product]}</div></div>
+        <span class="billing-item-price">${fmt(price)}</span>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  if (courtesy.length) {
+    html += `<div class="form-lbl" style="padding:16px 0 10px">CORTESÍAS (no facturar)</div>
+    <div class="billing-item-list">`;
+    courtesy.forEach(o => {
+      html += `<div class="billing-item">
+        <div><div class="billing-item-name">${o.guest}</div><div class="billing-item-meta">${o.id} · ${PROD_LABELS[o.product]}</div></div>
+        <span class="billing-item-price free">$0 🎁</span>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  if (!orders.length) {
+    html = `<div class="empty"><div class="empty-icon">💳</div><div class="empty-text">Aún no hay órdenes.</div></div>`;
+  }
+
+  el.innerHTML = html;
+}
+
 // ── ORDER DETAIL ──
 function showDetail(id) {
   const o = orders.find(x=>x.id===id);
@@ -643,6 +803,7 @@ function showDetail(id) {
         <div class="spec-row"><span class="sk">Fuente</span><span class="sv">${o.fontSize}</span></div>
         ${o.notes?`<div class="spec-row"><span class="sk">Notas</span><span class="sv" style="color:var(--gold-light)">${o.notes}</span></div>`:''}
         <div class="spec-row"><span class="sk">Tomó la orden</span><span class="sv">${o.takenBy||'—'}</span></div>
+        <div class="spec-row"><span class="sk">Facturación</span><span class="sv">${o.courtesy?'<span style="color:#166534;font-weight:700">🎁 Cortesía · $0</span>':'<span style="color:#1565C0;font-weight:700">$'+(o.price||PRICES[o.product]||0).toLocaleString('es-MX')+'</span>'}</span></div>
       </div>
     </div>
     <div class="section-lbl">ACTUALIZAR ESTADO</div>
@@ -673,7 +834,7 @@ function copyLink(url) {
 
 // ── NEW / EDIT ORDER ──
 function resetF() {
-  return { product:'cover', variant:'', initials:'', emoji:null, printColor:'Gold', fontSize:'10mm', guest:'', notes:'' };
+  return { product:'cover', variant:'', initials:'', emoji:null, printColor:'Gold', fontSize:'10mm', guest:'', notes:'', courtesy:false };
 }
 function startOrder() {
   if (curUser?.role !== 'staff') return;
@@ -685,7 +846,7 @@ function editOrder(id) {
   const o = orders.find(x=>x.id===id);
   if (!o) return;
   editId = id;
-  F = { product:o.product, variant:o.variant, initials:o.initials, emoji:o.emoji, printColor:o.printColor, fontSize:o.fontSize, guest:o.guest, notes:o.notes||'' };
+  F = { product:o.product, variant:o.variant, initials:o.initials, emoji:o.emoji, printColor:o.printColor, fontSize:o.fontSize, guest:o.guest, notes:o.notes||'', courtesy:o.courtesy||false };
   populateForm(); nav('form');
 }
 function populateForm() {
@@ -701,6 +862,8 @@ function populateForm() {
   document.getElementById('sz-6').className  = 'size-btn'+(F.fontSize==='6mm'?' sel':'');
   document.getElementById('sz-10').className = 'size-btn'+(F.fontSize==='10mm'?' sel':'');
   document.getElementById('no-emoji').className = 'no-emoji'+(F.emoji===null?' sel':'');
+  document.getElementById('inp-courtesy').checked = F.courtesy||false;
+  onCourtesyChange();
   renderVariants(); renderEmojiGrid();
 }
 
@@ -710,6 +873,7 @@ function selProd(p) {
   ['cover','bagtag','keytag','tobacco'].forEach(x =>
     document.getElementById('chip-'+x).className = 'chip'+(x===p?' sel':''));
   renderVariants();
+  onCourtesyChange(); // refresh price note
 }
 function renderVariants() {
   document.getElementById('variant-lbl').textContent = VAR_LABELS[F.product];
@@ -756,6 +920,27 @@ function selEmoji(e) {
   renderEmojiGrid();
 }
 
+// ── COURTESY ──
+function onCourtesyChange() {
+  const checked = document.getElementById('inp-courtesy').checked;
+  F.courtesy = checked;
+  const lbl = document.getElementById('courtesy-lbl');
+  const sub = document.getElementById('courtesy-sub');
+  const note = document.getElementById('courtesy-price-note');
+  const priceEl = document.getElementById('courtesy-price-val');
+  if (checked) {
+    lbl.textContent = '🎁 Cortesía';
+    sub.textContent = 'No va a facturación · $0';
+    note.style.display = 'none';
+  } else {
+    lbl.textContent = 'Orden de Pago';
+    sub.textContent = 'Se factura al cliente';
+    const price = PRICES[F.product] || 0;
+    priceEl.textContent = '$' + price.toLocaleString('es-MX');
+    note.style.display = 'block';
+  }
+}
+
 // ── COLOR / SIZE ──
 function selColor(el) {
   document.querySelectorAll('.c-dot').forEach(d=>d.classList.remove('sel'));
@@ -773,6 +958,8 @@ function saveOrder() {
   F.guest    = document.getElementById('inp-guest').value.trim();
   F.initials = document.getElementById('inp-initials').value.trim().toUpperCase();
   F.notes    = document.getElementById('inp-notes').value.trim();
+  F.courtesy = document.getElementById('inp-courtesy').checked;
+  F.price    = F.courtesy ? 0 : (PRICES[F.product] || 0);
   if (!F.guest)    { alert('Ingresa el nombre del invitado.'); return; }
   if (!F.initials) { alert('Ingresa las iniciales.'); return; }
   if (!F.variant)  { alert('Selecciona una variante.'); return; }
