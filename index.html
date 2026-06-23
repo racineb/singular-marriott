@@ -817,9 +817,21 @@ function showDetail(id) {
       <span class="link-text">${url}</span>
       <button class="copy-btn" id="cpybtn" onclick="copyLink('${url}')">COPIAR</button>
     </div>
-    ${canEdit ? `<button class="btn-edit" onclick="editOrder('${o.id}')">✏️ Editar Orden</button>` : ''}
+    ${canEdit ? `<button class="btn-edit" onclick="editOrder('${o.id}')">✏️ Editar Orden</button>
+    <button class="btn-edit" style="color:#C0392B;border-color:rgba(192,57,43,.35);margin-top:8px" onclick="deleteOrder('${o.id}')">🗑 Eliminar Orden</button>` : ''}
   `;
   nav('detail');
+}
+function deleteOrder(id) {
+  const o = orders.find(x=>x.id===id);
+  if (!o) return;
+  if (!confirm(`¿Eliminar la orden de ${o.guest} (${o.id})?\nEsto no se puede deshacer.`)) return;
+  orders = orders.filter(x=>x.id!==id);
+  localStorage.setItem('sg_orders', JSON.stringify(orders));
+  ordersRef.child(id).remove()
+    .then(() => console.log('🗑 Eliminado de Firebase:', id))
+    .catch(err => console.warn('⚠️ Error al eliminar de Firebase:', err.message));
+  goBack();
 }
 function updStatus(id, s) {
   const o = orders.find(x=>x.id===id);
