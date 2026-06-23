@@ -4,8 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Singular – Marriott</title>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+// Load Firebase dynamically — app works without internet if it fails
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = src; s.onload = resolve; s.onerror = reject;
+    document.head.appendChild(s);
+  });
+}
+window._firebaseReady = Promise.all([
+  loadScript('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js'),
+  loadScript('https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js')
+]).catch(() => null);
+</script>
 <style>
 :root {
   --gold: #B8872A;
@@ -369,43 +381,9 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 
     <div class="form-block">
       <label class="form-lbl">Iniciales / Texto</label>
-      <input class="text-inp mono-inp" id="inp-initials" maxlength="3" placeholder="JS" oninput="onInitials(this)" autocomplete="off" autocorrect="off" spellcheck="false">
-      <div class="char-hint"><span id="char-n">0</span>/3</div>
-      <div class="note-box" id="note-6mm" style="display:none">⚠ Fuente 6mm: solo letras mayúsculas y alfanuméricos.</div>
+      <input class="text-inp mono-inp" id="inp-initials" maxlength="5" placeholder="JS" oninput="onInitials(this)" autocomplete="off" autocorrect="off" spellcheck="false">
     </div>
 
-    <div class="form-block">
-      <label class="form-lbl">Emoji / Símbolo</label>
-      <div><span class="no-emoji sel" id="no-emoji" onclick="selEmoji(null)">✕ Sin emoji</span></div>
-      <div class="emoji-tab-row" style="margin-top:10px">
-        <div class="e-tab active" onclick="switchETab('all',this)">All</div>
-        <div class="e-tab" onclick="switchETab('family',this)">Family</div>
-        <div class="e-tab" onclick="switchETab('animals',this)">Animals</div>
-        <div class="e-tab" onclick="switchETab('zodiac',this)">Zodiac</div>
-      </div>
-      <div class="emoji-grid" id="emoji-grid"></div>
-    </div>
-
-    <div class="form-block">
-      <label class="form-lbl">Color de Impresión</label>
-      <div class="color-row">
-        <div class="c-dot c-gold  sel" data-c="Gold"      onclick="selColor(this)"></div>
-        <div class="c-dot c-dgold"     data-c="Dark Gold" onclick="selColor(this)"></div>
-        <div class="c-dot c-silver"    data-c="Silver"    onclick="selColor(this)"></div>
-        <div class="c-dot c-dgray"     data-c="Dark Gray" onclick="selColor(this)"></div>
-        <div class="c-dot c-gray"      data-c="Gray"      onclick="selColor(this)"></div>
-        <div class="c-dot c-white"     data-c="White"     onclick="selColor(this)"></div>
-      </div>
-      <div class="note-box" style="margin-top:10px">ℹ Logo SINGULAR permanece en dorado.</div>
-    </div>
-
-    <div class="form-block">
-      <label class="form-lbl">Tamaño de Fuente</label>
-      <div class="size-row">
-        <div class="size-btn"     id="sz-6"  onclick="selSize('6mm')"><div class="size-lbl">6mm</div><div class="size-sub">Solo letras</div></div>
-        <div class="size-btn sel" id="sz-10" onclick="selSize('10mm')"><div class="size-lbl">10mm</div><div class="size-sub">Recomendado</div></div>
-      </div>
-    </div>
 
     <div class="form-block">
       <label class="form-lbl">Notas (opcional)</label>
@@ -448,7 +426,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 </div>
 
 <script>
-// ── FIREBASE ──
+// ── FIREBASE (optional — app works without internet) ──
 const firebaseConfig = {
   apiKey: "AIzaSyAG4G63dlJwsSuWFw6J7HrPdjVt2LeWC6M",
   authDomain: "marriotxsingular.firebaseapp.com",
@@ -458,9 +436,41 @@ const firebaseConfig = {
   messagingSenderId: "1022715414748",
   appId: "1:1022715414748:web:f81a4200c3a5e39e220c19"
 };
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-const ordersRef = db.ref('orders');
+let ordersRef = null;
+
+window._firebaseReady.then(result => {
+  if (!result) { console.warn('Firebase SDK no disponible — modo offline'); return; }
+  try {
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    ordersRef = db.ref('orders');
+    // Real-time listener — merges Firebase data with any pending local writes
+    ordersRef.on('value', snapshot => {
+      const fbData = snapshot.val() || {};
+      // Build map of what's currently local
+      const localMap = {};
+      orders.forEach(o => { if (o.id) localMap[o.id] = o; });
+      // Merge: local first, Firebase overwrites (for status updates), then pending on top
+      const merged = { ...localMap, ...fbData };
+      Object.values(pendingLocal).forEach(o => { merged[o.id] = o; });
+      orders = Object.values(merged).sort((a,b) => (a.createdAt||0) - (b.createdAt||0));
+      localStorage.setItem('sg_orders', JSON.stringify(orders));
+      // Push any local-only orders up to Firebase
+      Object.keys(localMap).forEach(id => {
+        if (!fbData[id]) ordersRef.child(id).set(localMap[id]).catch(()=>{});
+      });
+      if (curUser) {
+        renderOrders(); renderProd();
+        if (curTab === 'inv') renderInv();
+        if (curTab === 'billing') renderBilling();
+      }
+    }, err => {
+      console.warn('Firebase listener error:', err.message);
+    });
+  } catch(e) {
+    console.warn('Firebase init error:', e.message);
+  }
+});
 
 // ── CONSTANTS ──
 const LOGO_B64 = document.querySelector('#view-login img.hero-logo').src;
@@ -504,39 +514,21 @@ let eTab      = 'all';
 let editId    = null;
 let F = {};
 
+// Pending local writes not yet confirmed by Firebase
+const pendingLocal = {};
+
 function saveData(order) {
-  // Always save locally first
   const idx = orders.findIndex(o => o.id === order.id);
   if (idx >= 0) orders[idx] = order; else orders.push(order);
   localStorage.setItem('sg_orders', JSON.stringify(orders));
+  pendingLocal[order.id] = order;
   renderOrders(); renderProd();
-  // Then try Firebase
-  ordersRef.child(order.id).set(order)
-    .then(() => console.log('✅ Firebase sync:', order.id))
-    .catch(err => console.warn('⚠️ Firebase falló, guardado localmente:', err.message));
-}
-
-// Real-time listener — updates all devices instantly
-let firebaseOK = false;
-ordersRef.on('value', snapshot => {
-  firebaseOK = true;
-  const data = snapshot.val() || {};
-  orders = Object.values(data).sort((a,b) => (a.createdAt||0) - (b.createdAt||0));
-  // Keep localStorage in sync as backup
-  localStorage.setItem('sg_orders', JSON.stringify(orders));
-  if (curUser) {
-    renderOrders();
-    renderProd();
-    if (curTab === 'inv') renderInv();
-    if (curTab === 'billing') renderBilling();
+  if (ordersRef) {
+    ordersRef.child(order.id).set(order)
+      .then(() => { delete pendingLocal[order.id]; console.log('✅ Firebase sync:', order.id); })
+      .catch(err => console.warn('⚠️ Firebase falló, guardado localmente:', err.message));
   }
-}, err => {
-  // Firebase failed — fall back to localStorage
-  console.warn('Firebase no disponible, usando localStorage:', err.message);
-  firebaseOK = false;
-  orders = JSON.parse(localStorage.getItem('sg_orders') || '[]');
-  if (curUser) { renderOrders(); renderProd(); }
-});
+}
 function usedInv() {
   const u = {};
   orders.forEach(o => {
@@ -646,12 +638,11 @@ function renderOrders() {
     return `
     <div class="order-card" onclick="showDetail('${o.id}')">
       <div class="oc-top">
-        <span class="oid">${o.id}</span>
+        <span class="oname" style="font-size:16px;font-weight:600">${o.guest}</span>
         <span class="badge b${o.status}">${STATUS_TXT[o.status]}</span>
       </div>
-      <div class="oname" style="display:flex;align-items:center;gap:8px">${o.guest} ${priceBadge}</div>
-      <div class="ometa">${PROD_LABELS[o.product]} · ${o.variant}</div>
-      <div class="oinit">${o.initials}${o.emoji?' · '+o.emoji:''} · ${o.printColor} · ${o.fontSize}</div>
+      <div class="ometa" style="display:flex;align-items:center;gap:8px;margin-top:4px">${PROD_LABELS[o.product]} · ${o.variant} ${priceBadge}</div>
+      <div class="oinit">${o.initials}</div>
     </div>`;
   }).join('');
 }
@@ -670,7 +661,7 @@ function renderProd() {
       <div class="pc-head">
         <div>
           <div class="pc-name">${o.guest}</div>
-          <div class="pc-meta">${o.id} · ${PROD_LABELS[o.product]} · ${o.variant} · <strong style="color:var(--gold-light)">${o.initials}${o.emoji?' '+o.emoji:''}</strong> · ${o.printColor} · ${o.fontSize}</div>
+          <div class="pc-meta">${PROD_LABELS[o.product]} · ${o.variant} · <strong style="color:var(--gold-light)">${o.initials}</strong></div>
         </div>
         <span class="badge b${o.status}" style="flex-shrink:0;margin-left:10px">${STATUS_TXT[o.status]}</span>
       </div>
@@ -756,7 +747,7 @@ function renderBilling() {
     paid.forEach(o => {
       const price = o.price || PRICES[o.product] || 0;
       html += `<div class="billing-item">
-        <div><div class="billing-item-name">${o.guest}</div><div class="billing-item-meta">${o.id} · ${PROD_LABELS[o.product]}</div></div>
+        <div><div class="billing-item-name">${o.guest}</div><div class="billing-item-meta">${PROD_LABELS[o.product]}</div></div>
         <span class="billing-item-price">${fmt(price)}</span>
       </div>`;
     });
@@ -768,7 +759,7 @@ function renderBilling() {
     <div class="billing-item-list">`;
     courtesy.forEach(o => {
       html += `<div class="billing-item">
-        <div><div class="billing-item-name">${o.guest}</div><div class="billing-item-meta">${o.id} · ${PROD_LABELS[o.product]}</div></div>
+        <div><div class="billing-item-name">${o.guest}</div><div class="billing-item-meta">${PROD_LABELS[o.product]}</div></div>
         <span class="billing-item-price free">$0 🎁</span>
       </div>`;
     });
@@ -792,15 +783,13 @@ function showDetail(id) {
   document.getElementById('detail-content').innerHTML = `
     <div class="detail-card">
       <div class="dhead">
-        <div><div class="dguest">${o.guest}</div><div class="did">${o.id}</div></div>
+        <div><div class="dguest">${o.guest}</div></div>
         <span class="badge b${o.status}">${STATUS_TXT[o.status]}</span>
       </div>
       <div class="dbody">
         <div class="spec-row"><span class="sk">Producto</span><span class="sv">${PROD_LABELS[o.product]}</span></div>
         <div class="spec-row"><span class="sk">${VAR_LABELS[o.product]}</span><span class="sv">${o.variant}</span></div>
-        <div class="spec-row"><span class="sk">Iniciales</span><span class="sv" style="font-size:18px;letter-spacing:3px;color:var(--gold)">${o.initials}${o.emoji?' '+o.emoji:''}</span></div>
-        <div class="spec-row"><span class="sk">Color impresión</span><span class="sv">${o.printColor}</span></div>
-        <div class="spec-row"><span class="sk">Fuente</span><span class="sv">${o.fontSize}</span></div>
+        <div class="spec-row"><span class="sk">Iniciales</span><span class="sv" style="font-size:18px;letter-spacing:3px;color:var(--gold)">${o.initials}</span></div>
         ${o.notes?`<div class="spec-row"><span class="sk">Notas</span><span class="sv" style="color:var(--gold-light)">${o.notes}</span></div>`:''}
         <div class="spec-row"><span class="sk">Tomó la orden</span><span class="sv">${o.takenBy||'—'}</span></div>
         <div class="spec-row"><span class="sk">Facturación</span><span class="sv">${o.courtesy?'<span style="color:#166534;font-weight:700">🎁 Cortesía · $0</span>':'<span style="color:#1565C0;font-weight:700">$'+(o.price||PRICES[o.product]||0).toLocaleString('es-MX')+'</span>'}</span></div>
@@ -827,8 +816,9 @@ function deleteOrder(id) {
   if (!o) return;
   if (!confirm(`¿Eliminar la orden de ${o.guest} (${o.id})?\nEsto no se puede deshacer.`)) return;
   orders = orders.filter(x=>x.id!==id);
+  delete pendingLocal[id];
   localStorage.setItem('sg_orders', JSON.stringify(orders));
-  ordersRef.child(id).remove()
+  if (ordersRef) ordersRef.child(id).remove()
     .then(() => console.log('🗑 Eliminado de Firebase:', id))
     .catch(err => console.warn('⚠️ Error al eliminar de Firebase:', err.message));
   goBack();
@@ -846,7 +836,7 @@ function copyLink(url) {
 
 // ── NEW / EDIT ORDER ──
 function resetF() {
-  return { product:'cover', variant:'', initials:'', emoji:null, printColor:'Gold', fontSize:'10mm', guest:'', notes:'', courtesy:false };
+  return { product:'cover', variant:'', initials:'', guest:'', notes:'', courtesy:false };
 }
 function startOrder() {
   if (curUser?.role !== 'staff') return;
@@ -858,7 +848,7 @@ function editOrder(id) {
   const o = orders.find(x=>x.id===id);
   if (!o) return;
   editId = id;
-  F = { product:o.product, variant:o.variant, initials:o.initials, emoji:o.emoji, printColor:o.printColor, fontSize:o.fontSize, guest:o.guest, notes:o.notes||'', courtesy:o.courtesy||false };
+  F = { product:o.product, variant:o.variant, initials:o.initials, guest:o.guest, notes:o.notes||'', courtesy:o.courtesy||false };
   populateForm(); nav('form');
 }
 function populateForm() {
@@ -871,12 +861,9 @@ function populateForm() {
     document.getElementById('chip-'+p).className = 'chip'+(p===F.product?' sel':''));
   document.querySelectorAll('.c-dot').forEach(d =>
     d.classList.toggle('sel', d.dataset.c===F.printColor));
-  document.getElementById('sz-6').className  = 'size-btn'+(F.fontSize==='6mm'?' sel':'');
-  document.getElementById('sz-10').className = 'size-btn'+(F.fontSize==='10mm'?' sel':'');
-  document.getElementById('no-emoji').className = 'no-emoji'+(F.emoji===null?' sel':'');
   document.getElementById('inp-courtesy').checked = F.courtesy||false;
   onCourtesyChange();
-  renderVariants(); renderEmojiGrid();
+  renderVariants();
 }
 
 // ── PRODUCT ──
@@ -912,8 +899,6 @@ function selVariant(v) {
 // ── INITIALS ──
 function onInitials(el) {
   el.value=el.value.toUpperCase(); F.initials=el.value;
-  document.getElementById('char-n').textContent=el.value.length;
-  document.getElementById('note-6mm').style.display=F.fontSize==='6mm'?'block':'none';
 }
 
 // ── EMOJI ──
@@ -972,6 +957,7 @@ function saveOrder() {
   F.notes    = document.getElementById('inp-notes').value.trim();
   F.courtesy = document.getElementById('inp-courtesy').checked;
   F.price    = F.courtesy ? 0 : (PRICES[F.product] || 0);
+  F.emoji = null; F.printColor = 'Gold'; F.fontSize = '10mm'; // legacy fields cleared
   if (!F.guest)    { alert('Ingresa el nombre del invitado.'); return; }
   if (!F.initials) { alert('Ingresa las iniciales.'); return; }
   if (!F.variant)  { alert('Selecciona una variante.'); return; }
@@ -983,7 +969,10 @@ function saveOrder() {
     const updated = { ...existing, ...F };
     saveData(updated);
   } else {
-    const id = 'SE-'+String(orders.length+1).padStart(3,'0');
+    // Generate unique ID: Firebase push key if available, else timestamp+random
+    const id = ordersRef
+      ? ordersRef.push().key
+      : 'L-' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2,4).toUpperCase();
     const newOrder = { id, ...F, status:0, takenBy: curUser?.name||'', createdAt:Date.now() };
     saveData(newOrder);
   }
@@ -1004,13 +993,13 @@ function doTrack() {
   res.innerHTML=`
     <div class="detail-card">
       <div class="dhead">
-        <div><div class="dguest">${o.guest}</div><div class="did">${o.id}</div></div>
+        <div><div class="dguest">${o.guest}</div></div>
         <span class="badge b${o.status}">${STATUS_TXT[o.status]}</span>
       </div>
       <div class="dbody">
         <div class="spec-row"><span class="sk">Producto</span><span class="sv">${PROD_LABELS[o.product]}</span></div>
         <div class="spec-row"><span class="sk">${VAR_LABELS[o.product]}</span><span class="sv">${o.variant}</span></div>
-        <div class="spec-row"><span class="sk">Personalización</span><span class="sv" style="color:var(--gold);font-size:16px;letter-spacing:2px">${o.initials}${o.emoji?' '+o.emoji:''}</span></div>
+        <div class="spec-row"><span class="sk">Personalización</span><span class="sv" style="color:var(--gold);font-size:16px;letter-spacing:2px">${o.initials}</span></div>
       </div>
     </div>
     <div class="section-lbl">ESTADO DE TU REGALO</div>
@@ -1031,6 +1020,8 @@ function doTrack() {
 
 // ── INIT ──
 (function init() {
+  // Load from localStorage immediately — no internet needed to start
+  orders = JSON.parse(localStorage.getItem('sg_orders') || '[]');
   const p = new URLSearchParams(location.search);
   const t = p.get('track');
   if (t) { nav('track',false); document.getElementById('track-inp').value=t; setTimeout(doTrack,300); return; }
