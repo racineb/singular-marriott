@@ -852,15 +852,11 @@ function editOrder(id) {
   populateForm(); nav('form');
 }
 function populateForm() {
-  document.getElementById('inp-guest').value   = F.guest;
-  document.getElementById('inp-initials').value= F.initials;
-  document.getElementById('char-n').textContent= F.initials.length;
-  document.getElementById('inp-notes').value   = F.notes;
-  document.getElementById('note-6mm').style.display = F.fontSize==='6mm'?'block':'none';
+  document.getElementById('inp-guest').value    = F.guest;
+  document.getElementById('inp-initials').value = F.initials;
+  document.getElementById('inp-notes').value    = F.notes;
   ['cover','bagtag','keytag','tobacco'].forEach(p =>
     document.getElementById('chip-'+p).className = 'chip'+(p===F.product?' sel':''));
-  document.querySelectorAll('.c-dot').forEach(d =>
-    d.classList.toggle('sel', d.dataset.c===F.printColor));
   document.getElementById('inp-courtesy').checked = F.courtesy||false;
   onCourtesyChange();
   renderVariants();
